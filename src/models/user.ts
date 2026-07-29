@@ -3,9 +3,13 @@ export type LoginInformation = {
   password?: string;
 };
 
-export type UserInformation = {
+export type SignUpInformation = {
   name?: string;
   email?: string;
+  password?: string;
+}
+
+export type UserInformation = {
   birthMonth?: string;
   birthday?: string;
   birthYear?: string;
@@ -29,4 +33,4 @@ export type ExtendedUserInformation = {
   receiveSpecialOffersFromOurPartners: boolean;
 };
 
-export type NewRegisteredUserInformation = LoginInformation & UserInformation & AddressInformation & ExtendedUserInformation;
+export type NewRegisteredUserInformation = SignUpInformation & UserInformation & AddressInformation & ExtendedUserInformation;
