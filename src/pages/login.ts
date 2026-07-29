@@ -13,7 +13,7 @@ export class LoginPage {
     this.passwordInput = page.getByPlaceholder('Password');
   }
 
-  async Login(loginInfo: LoginInformation): Promise<void> {
+  async login(loginInfo: LoginInformation): Promise<void> {
     await this.usernameInput.fill(loginInfo.username ?? '');
     await this.passwordInput.fill(loginInfo.password ?? '');
     await this.page.getByRole('button', { name: 'Login' }).click();
