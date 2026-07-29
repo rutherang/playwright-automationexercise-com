@@ -10,7 +10,7 @@ test('TC#3 Login User with incorrect email and password', async ({ page }) => {
   await page.getByRole('link', { name: 'Signup / Login' }).click();
   await expect(page.getByRole('heading', { name: 'Login to your account' })).toBeVisible();
 
-  await new LoginPage(page).Login(INVALID_USER);
+  await new LoginPage(page).login(INVALID_USER);
 
   await expect(page.getByText('Your email or password is incorrect')).toBeVisible();
 });
