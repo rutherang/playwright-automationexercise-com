@@ -12,7 +12,6 @@ test('TC#7 Verify test case', async ({ page }) => {
   await page.locator('#header').getByRole('link', { name: 'Test Cases ' }).click();
   await expect(page.getByRole('heading', { name: 'Test Cases', exact: true })).toBeVisible();
   await page.waitForLoadState('domcontentloaded');
-  // await page.getByRole('link', { name: 'Test Case 1: Register User' }).click();
   const testCaseSteps = await readJsonFile<TestCase>('../src/data/tc1-steps.json')
 
   const testCasePage = new TestCasePage(page);

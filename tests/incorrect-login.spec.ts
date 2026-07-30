@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../src/pages/login';
+import { LoginPage } from '../src/pages/login.page';
 import { INVALID_USER } from '../src/constants/invalid-user-login';
 
 test('TC#3 Login User with incorrect email and password', async ({ page }) => {
