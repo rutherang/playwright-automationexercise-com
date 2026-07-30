@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { SignUpPage } from '../src/pages/signup';
+import { SignUpPage } from '../src/pages/signup.page';
 import { EXISTING_SIGNUP_USER } from '../src/constants/existing-user-signup';
 
 test('TC#5 Register with existing email', async ({ page }) => {
