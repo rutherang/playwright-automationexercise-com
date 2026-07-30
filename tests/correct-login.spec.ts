@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { VALID_USER } from '../src/constants/valid-user-login';
-import { LoginPage } from '../src/pages/login';
+import { LoginPage } from '../src/pages/login.page';
 
 test('TC#2 Login User with correct email and password', async ({ page }) => {
   await page.goto('/');

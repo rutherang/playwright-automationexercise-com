@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { newRegisteredUser } from '../src/constants/new-user-registration-info';
-import { SignUpPage } from '../src/pages/signup';
+import { SignUpPage } from '../src/pages/signup.page';
+
 
 test('TC#1 Register User', async ({ page }) => {
   await page.goto('https://www.automationexercise.com/');
@@ -17,10 +18,6 @@ test('TC#1 Register User', async ({ page }) => {
 
   await test.step('Enter Account information successful', async () => {
     await new SignUpPage(page).signUp(newRegisteredUser);
-    // await page.getByPlaceholder('Name').fill(newRegisteredUser.name ?? '');
-    // await page.locator('form').filter({ hasText: 'Signup' })
-    //   .getByPlaceholder('Email Address').fill(newRegisteredUser.email ?? '');
-    // await page.getByRole('button', { name: 'Signup' }).click();
     await page.waitForLoadState('domcontentloaded');
     await expect(page.getByText('ENTER ACCOUNT INFORMATION')).toBeVisible();
   });
