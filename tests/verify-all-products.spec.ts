@@ -1,12 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { ProductsPage } from '../src/pages/products.page';
 import { ProductDetailsPage } from '../src/pages/product-details.page';
+import { HomePage } from '../src/pages/home.page';
 
 test('TC#8 Verify Product Page and Product detail page', async ({ page }) => {
   const productPage = new ProductsPage(page);
   const productPageDetails = new ProductDetailsPage(page);
   await page.goto('/');
-  await page.getByRole('link', { name: 'Products' }).click();
+  await new HomePage(page).goToProducts();
 
   await expect(page.getByRole('heading', { name: 'All Products' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Category' })).toBeVisible();

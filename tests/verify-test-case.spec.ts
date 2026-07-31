@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { TestCasePage } from '../src/pages/test-cases.page';
 import { readJsonFile } from '../src/helpers/read-json.helper';
+import { HomePage } from '../src/pages/home.page';
 
 interface TestCase {
   steps: string[];
@@ -9,7 +10,7 @@ interface TestCase {
 test('TC#7 Verify test case', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
-  await page.locator('#header').getByRole('link', { name: 'Test Cases ' }).click();
+  await new HomePage(page).goToTestCases();
   await expect(page.getByRole('heading', { name: 'Test Cases', exact: true })).toBeVisible();
   await page.waitForLoadState('domcontentloaded');
   const testCaseSteps = await readJsonFile<TestCase>('../src/data/tc1-steps.json')
