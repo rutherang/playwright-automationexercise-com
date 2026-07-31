@@ -15,7 +15,7 @@ test.describe('Cart', () => {
 
     await page.goto('/');
     await homePage.goToProducts();
-    await productsPage.addProductToCartByName('Top');
+    await productsPage.addProductToCartByName('Blue Top');
     await productsPage.continueShopping();
     await productsPage.addProductToCartByName('Men Tshirt');
     await productsPage.viewCart();
