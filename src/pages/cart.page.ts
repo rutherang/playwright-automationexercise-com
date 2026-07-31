@@ -4,10 +4,12 @@ import { CartItem, ExpectedCartItem } from '../models/cart-item.model';
 export class CartPage {
   readonly page: Page;
   readonly cartRows: Locator;
+  readonly checkoutLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.cartRows = page.locator('#cart_info tbody tr');
+    this.checkoutLink = page.getByText('Proceed To Checkout');
   }
 
   async getCartItems(): Promise<CartItem[]> {
@@ -64,4 +66,6 @@ export class CartPage {
       });
     }
   }
+
+
 }
