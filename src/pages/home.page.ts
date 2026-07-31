@@ -4,11 +4,13 @@ export class HomePage {
   readonly page: Page;
   readonly allProductsLink: Locator;
   readonly testCasesLink: Locator;
+  readonly cartLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.allProductsLink = this.page.getByRole('link', { name: 'Products' });
     this.testCasesLink = this.page.locator('#header').getByRole('link', { name: 'Test Cases ' });
+    this.cartLink = this.page.getByRole('link', { name: 'Cart' });
   }
 
   async goToProducts(): Promise<void> {
@@ -17,5 +19,9 @@ export class HomePage {
 
   async goToTestCases(): Promise<void> {
     await this.testCasesLink.click();
+  }
+
+  async goToViewCart(): Promise<void> {
+    await this.cartLink.click();
   }
 }
