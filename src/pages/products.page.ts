@@ -97,4 +97,11 @@ export class ProductsPage {
       });
     }
   }
+
+   async filterByBrand(brandName: string): Promise<void> {
+    const brand = this.page.getByRole('link', { name: brandName });
+    await expect(brand).toBeVisible();
+    await expect(brand).toHaveCount(1);
+    await brand.click();
+  }
 }
