@@ -3,18 +3,22 @@ import { Page, Locator, expect, test } from '@playwright/test';
 export class ProductsPage {
   readonly page: Page;
   readonly products: Locator;
+  readonly productNames: Locator;
   readonly productSearchBox: Locator;
   readonly submitSearchButton: Locator;
   readonly continueShoppingMessageButton: Locator;
   readonly viewCartMessageButton: Locator;
+  readonly categoryHeading: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.products = page.locator('.single-products');
+    this.productNames = page.locator('.productinfo p');
     this.productSearchBox = page.getByRole('textbox', { name: 'search' });
     this.submitSearchButton = page.locator('#submit_search');
     this.continueShoppingMessageButton = this.page.getByRole('button', { name: 'Continue Shopping' });
     this.viewCartMessageButton = this.page.getByRole('link', { name: 'View Cart' });
+    this.categoryHeading = this.page.getByRole('heading', { name: 'Category' });
   }
 
   async verifyProductAddedConfirmationMessage(): Promise<void> {
@@ -71,5 +75,26 @@ export class ProductsPage {
     await expect(this.viewCartMessageButton).toBeVisible();
     await this.viewCartMessageButton.click();
     await expect(this.page.getByText('Shopping Cart')).toBeVisible();
+  }
+
+  async filterByCategory(categoryName: string, subCategoryName: string): Promise<void> {
+    const category = this.page.getByRole('link', { name: categoryName, exact: true });
+    await expect(category).toBeVisible();
+    await expect(category).toHaveCount(1);
+    await category.click();
+    const subCategory = this.page.getByRole('listitem').filter({ hasText: subCategoryName }).getByRole('link');
+    await expect(subCategory).toBeVisible();
+    await expect(subCategory).toHaveCount(1);
+    await subCategory.click();
+  }
+
+  async checkProductHasNames(productNames: string[]): Promise<void> {
+    const actualNames = (await this.productNames.allTextContents()).map((name) => name.replace(/\s+/g, ' ').trim());
+
+    for (const expectedName of productNames) {
+      await test.step(`"${expectedName}" exists in product list`, async () => {
+        expect(actualNames).toContain(expectedName);
+      });
+    }
   }
 }

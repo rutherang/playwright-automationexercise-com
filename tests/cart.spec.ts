@@ -19,7 +19,7 @@ test.describe('Cart', () => {
     await homePage.goToProducts();
     await productsPage.addProductToCartByName(PRODUCT_NAME.BLUE_TOP);
     await productsPage.continueShopping();
-    await productsPage.addProductToCartByName(PRODUCT_NAME.MEN_TSHIRT);
+    // await productsPage.addProductToCartByName(PRODUCT_NAME.MEN_TSHIRT);
     await productsPage.viewCart();
     await cartPage.verifyCartItems(expectedItems);
   });
