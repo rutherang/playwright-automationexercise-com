@@ -67,5 +67,11 @@ export class CartPage {
     }
   }
 
+  async removeProductByName(productName: string) {
+    const row = this.cartRows.filter({ hasText: productName});
+    expect (row).toHaveCount(1);
+    await row.locator('.cart_quantity_delete').click();
+  }
+
 
 }
