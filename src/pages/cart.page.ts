@@ -73,5 +73,14 @@ export class CartPage {
     await row.locator('.cart_quantity_delete').click();
   }
 
+  async checkCartHasProducts(productNames: string[]): Promise<void> {
+    const actualNames = (await this.page.locator('.cart_description h4 a').allTextContents()).map((name) => name.replace(/\s+/g, ' ').trim());
+
+    for (const expectedName of productNames) {
+      await test.step(`"${expectedName}" exists in product list`, async () => {
+        expect(actualNames).toContain(expectedName);
+      });
+    }
+  }
 
 }
