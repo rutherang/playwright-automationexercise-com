@@ -4,6 +4,7 @@ export class ProductsPage {
   readonly page: Page;
   readonly products: Locator;
   readonly productNames: Locator;
+  readonly recommendedItems: Locator;
   readonly productSearchBox: Locator;
   readonly submitSearchButton: Locator;
   readonly continueShoppingMessageButton: Locator;
@@ -19,6 +20,7 @@ export class ProductsPage {
     this.continueShoppingMessageButton = this.page.getByRole('button', { name: 'Continue Shopping' });
     this.viewCartMessageButton = this.page.getByRole('link', { name: 'View Cart' });
     this.categoryHeading = this.page.getByRole('heading', { name: 'Category' });
+    this.recommendedItems = this.page.locator('#recommended-item-carousel > .single-products > .product-info');
   }
 
   async verifyProductAddedConfirmationMessage(): Promise<void> {
@@ -103,5 +105,14 @@ export class ProductsPage {
     await expect(brand).toBeVisible();
     await expect(brand).toHaveCount(1);
     await brand.click();
+  }
+
+  async addRecommendedProductToCart(productName: string): Promise<void> {
+    const carousel = this.page.locator('#recommended-item-carousel');
+    const product = carousel.locator('.single-products').filter({ hasText: productName });
+    await product.scrollIntoViewIfNeeded();
+    await expect(product).toHaveCount(1);
+    await product.hover();
+    await product.locator('.productinfo .btn').click();
   }
 }
