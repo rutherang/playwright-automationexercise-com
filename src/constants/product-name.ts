@@ -7,4 +7,5 @@ export const PRODUCT_NAME = {
   PREMIUM_POLO: 'Premium Polo',
   SOFT_STRETCH_JEANS: 'Soft Stretch Jeans',
   REGULAR_FIT_STRAIGHT_JEANS: 'Regular Fit Straight Jeans',
+  STYLISH_DRESS: 'Stylish Dress',
 }
