@@ -26,4 +26,16 @@ export class HomePage {
   async goToViewCart(): Promise<void> {
     await this.cartLink.click();
   }
+
+  async scrollToTopUsingPageUp(page: Page): Promise<void> {
+    let previousScrollY = -1;
+    let currentScrollY = await page.evaluate(() => window.scrollY);
+
+    while (currentScrollY !== previousScrollY && currentScrollY > 0) {
+      previousScrollY = currentScrollY;
+      await page.keyboard.press('PageUp');
+      await page.waitForTimeout(200); // allow scroll animation to settle
+      currentScrollY = await page.evaluate(() => window.scrollY);
+    }
+  }
 }
