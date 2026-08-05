@@ -1,5 +1,7 @@
 import { Page, Locator, test, expect } from '@playwright/test';
 import { AddressDetails } from '../models/address.model';
+import fs from 'fs/promises';
+import { getDownloadPath } from '../helpers/download-path.helper';
 
 export class CheckOutPage {
   readonly page: Page;
@@ -49,5 +51,24 @@ export class CheckOutPage {
 
   async verifyBillingAddress(expected: AddressDetails): Promise<void> {
     await this.verifyAddress(this.billingAddress, expected, 'Billing address');
+  }
+
+  async downloadInvoiceAndVerify(): Promise<string> {
+    const [download] = await Promise.all([this.page.waitForEvent('download'), this.page.getByRole('link', { name: 'Download Invoice' }).click()]);
+
+    const failure = await download.failure();
+    await test.step('Download completed without failure', async () => {
+      expect(failure).toBeNull();
+    });
+
+    const destination = getDownloadPath(download.suggestedFilename());
+    await download.saveAs(destination);
+    return destination;
+  }
+
+  async verifyInvoiceContents(expectedText: string): Promise<void> {
+    const filePath = await this.downloadInvoiceAndVerify();
+    const content = await fs.readFile(filePath, 'utf-8');
+    expect(content).toContain(expectedText);
   }
 }

@@ -22,6 +22,10 @@ export const test = base.extend<AuthFixtures>({
 
     const page = await context.newPage();
 
+    // block ad/tracker requests
+    await page.route('**/*doubleclick*/**', route => route.abort());
+    await page.route('**/*ads*/**', route => route.abort());
+
     if (!fs.existsSync(STORAGE_STATE_PATH)) {
       const loginPage = new LoginPage(page);
       await page.goto('/login')

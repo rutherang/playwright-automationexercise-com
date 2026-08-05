@@ -17,24 +17,16 @@ test('TC#16 Logged In User Place Order and Checkout', async ({ loggedInPage }) =
   await productPage.viewCart();
   await cartPage.checkoutLink.click();
 
-  await test.step('TC#23 Verify Address Details', async() => {
-    const addressDetails =  await loggedInPage.locator('#address_delivery li').allTextContents();
-    console.log('Address Details:', addressDetails);
+  await test.step('TC#23 Verify Address Details', async () => {
     const expectedAddressDetails = await readJsonFile<AddressDetails>('../src/data/tc23-address-details.data.json');
-    console.log('Expected Address Details:', expectedAddressDetails);
     await checkOutPage.verifyDeliveryAddress(expectedAddressDetails);
 
-    const billingAddressDetails = await loggedInPage.locator('#address_invoice li').allTextContents();
-    console.log('Billing Address Details:', billingAddressDetails);
-     const expectedBillingAddressDetails = await readJsonFile<AddressDetails>('../src/data/tc23-billing-address-details.data.json');
-    console.log('Expected Billing Address Details:', expectedBillingAddressDetails);
+    const expectedBillingAddressDetails = await readJsonFile<AddressDetails>('../src/data/tc23-billing-address-details.data.json');
     await checkOutPage.verifyBillingAddress(expectedBillingAddressDetails);
   });
 
   await checkOutPage.addComment('This is comment made from automation');
-
   await expect(checkOutPage.commentInput).toHaveValue('This is comment made from automation');
-
   await checkOutPage.placeOrder();
   await paymentPage.verifyPaymentPage();
   await paymentPage.fillCardDetails({
@@ -47,4 +39,10 @@ test('TC#16 Logged In User Place Order and Checkout', async ({ loggedInPage }) =
 
   await paymentPage.payAndConfirmOrderButton.click();
   await paymentPage.verifySuccessfulPayment();
+
+  loggedInPage.on('response', (response) => {
+    console.log('response.url:\n', response.url(), 'response.status:\n', response.status(), 'response.headers:\n', response.headers()['content-disposition']);
+  });
+
+  await checkOutPage.verifyInvoiceContents('Hi John Doe, Your total purchase amount is 500. Thank you');
 });
