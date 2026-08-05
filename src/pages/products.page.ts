@@ -109,6 +109,14 @@ export class ProductsPage {
 
   async addRecommendedProductToCart(productName: string): Promise<void> {
     const carousel = this.page.locator('#recommended-item-carousel');
+    console.log('pausing carousel auto-rotation', await carousel.allInnerTexts());
+    // pause the carousel's auto-rotation
+    await this.page.evaluate(() => {
+      const el = document.querySelector('#recommended-item-carousel') as any;
+      if (el && (window as any).jQuery) {
+        (window as any).jQuery(el).trigger('stop.owl.autoplay');
+      }
+    });
     const product = carousel.locator('.single-products').filter({ hasText: productName });
     await product.scrollIntoViewIfNeeded();
     await expect(product).toHaveCount(1);
