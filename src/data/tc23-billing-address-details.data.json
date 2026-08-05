@@ -1,0 +1,9 @@
+{
+  "name": "John Doe",
+  "company": "example 123",
+  "addressLine1": "123 Main St",
+  "addressLine2": "Apt 4B",
+  "cityStateZip": "Los Angeles California 90001",
+  "country": "United States",
+  "phone": "1234567890"
+}
