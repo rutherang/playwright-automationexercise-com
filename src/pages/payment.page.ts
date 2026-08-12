@@ -1,8 +1,8 @@
 import { Page, Locator, expect } from '@playwright/test';
+import { BasePage } from './base.page';
 import { PaymentDetails } from '../models/payment.model';
 
-export class PaymentPage {
-  readonly page: Page;
+export class PaymentPage extends BasePage {
   readonly nameOnCardInput: Locator;
   readonly cardNumberInput: Locator;
   readonly cvcInput: Locator;
@@ -11,7 +11,7 @@ export class PaymentPage {
   readonly payAndConfirmOrderButton: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.nameOnCardInput = this.page.locator('input[name="name_on_card"]');
     this.cardNumberInput = this.page.locator('input[name="card_number"]');
     this.cvcInput = this.page.getByRole('textbox', { name: 'ex.' });

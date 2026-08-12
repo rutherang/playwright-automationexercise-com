@@ -1,10 +1,9 @@
 import { Page } from '@playwright/test';
+import { BasePage } from './base.page';
 
-export class TestCasePage {
-  readonly page: Page;
-
+export class TestCasePage extends BasePage {
   constructor(page: Page) {
-    this.page = page;
+    super(page);
   }
 
   async expandTestCase(name: string): Promise<void> {

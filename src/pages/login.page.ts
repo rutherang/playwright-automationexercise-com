@@ -1,14 +1,13 @@
 import { Page, Locator } from '@playwright/test';
+import { BasePage } from './base.page';
 import { LoginInformation } from '../models/user';
 
-
-export class LoginPage {
-  readonly page: Page;
+export class LoginPage extends BasePage {
   readonly usernameInput: Locator;
   readonly passwordInput: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.usernameInput = page.locator('form').filter({ hasText: 'Login' }).getByPlaceholder('Email Address');
     this.passwordInput = page.getByPlaceholder('Password');
   }

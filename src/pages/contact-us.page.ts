@@ -1,7 +1,7 @@
 import { Page, Locator } from '@playwright/test';
+import { BasePage } from './base.page';
 
-export class ContactUsPage {
-  readonly page: Page;
+export class ContactUsPage extends BasePage {
   readonly nameInput: Locator;
   readonly emailInput: Locator;
   readonly subjectInput: Locator;
@@ -9,7 +9,7 @@ export class ContactUsPage {
   readonly uploadFileInput: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.nameInput = page.getByPlaceholder('Name');
     this.emailInput = page.getByPlaceholder('Email', { exact: true });
     this.subjectInput = page.getByPlaceholder('Subject');
