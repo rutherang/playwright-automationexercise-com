@@ -1,17 +1,17 @@
 import { Page, Locator, test, expect } from '@playwright/test';
+import { BasePage } from './base.page';
 import { AddressDetails } from '../models/address.model';
 import fs from 'fs/promises';
 import { getDownloadPath } from '../helpers/download-path.helper';
 
-export class CheckOutPage {
-  readonly page: Page;
+export class CheckOutPage extends BasePage {
   readonly commentInput: Locator;
   readonly placeOrderButton: Locator;
   readonly deliveryAddress: Locator;
   readonly billingAddress: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.commentInput = this.page.locator('#ordermsg textarea');
     this.placeOrderButton = this.page.getByRole('link', { name: 'Place Order' });
     this.deliveryAddress = page.locator('#address_delivery li');

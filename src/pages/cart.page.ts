@@ -1,13 +1,13 @@
 import { Page, Locator, expect, test } from '@playwright/test';
+import { BasePage } from './base.page';
 import { CartItem, ExpectedCartItem } from '../models/cart-item.model';
 
-export class CartPage {
-  readonly page: Page;
+export class CartPage extends BasePage {
   readonly cartRows: Locator;
   readonly checkoutLink: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.cartRows = page.locator('#cart_info tbody tr');
     this.checkoutLink = page.getByText('Proceed To Checkout');
   }

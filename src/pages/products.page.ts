@@ -1,7 +1,7 @@
 import { Page, Locator, expect, test } from '@playwright/test';
+import { BasePage } from './base.page';
 
-export class ProductsPage {
-  readonly page: Page;
+export class ProductsPage extends BasePage {
   readonly products: Locator;
   readonly productNames: Locator;
   readonly recommendedItems: Locator;
@@ -12,7 +12,7 @@ export class ProductsPage {
   readonly categoryHeading: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.products = page.locator('.single-products');
     this.productNames = page.locator('.productinfo p');
     this.productSearchBox = page.getByRole('textbox', { name: 'search' });

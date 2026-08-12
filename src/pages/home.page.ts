@@ -1,14 +1,14 @@
 import { Page, Locator } from '@playwright/test';
+import { BasePage } from './base.page';
 
-export class HomePage {
-  readonly page: Page;
+export class HomePage extends BasePage {
   readonly allProductsLink: Locator;
   readonly testCasesLink: Locator;
   readonly cartLink: Locator;
   readonly loginLink: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.allProductsLink = this.page.getByRole('link', { name: 'Products' });
     this.testCasesLink = this.page.locator('#header').getByRole('link', { name: 'Test Cases ' });
     this.cartLink = this.page.getByRole('link', { name: 'Cart' });
@@ -27,15 +27,7 @@ export class HomePage {
     await this.cartLink.click();
   }
 
-  async scrollToTopUsingPageUp(page: Page): Promise<void> {
-    let previousScrollY = -1;
-    let currentScrollY = await page.evaluate(() => window.scrollY);
-
-    while (currentScrollY !== previousScrollY && currentScrollY > 0) {
-      previousScrollY = currentScrollY;
-      await page.keyboard.press('PageUp');
-      await page.waitForTimeout(200); // allow scroll animation to settle
-      currentScrollY = await page.evaluate(() => window.scrollY);
-    }
+  async scrollToTopUsingPageUp(): Promise<void> {
+    await super.scrollToTopUsingPageUp();
   }
 }

@@ -1,7 +1,7 @@
 import { Page, Locator, expect } from '@playwright/test';
+import { BasePage } from './base.page';
 
-export class ProductDetailsPage {
-  readonly page: Page;
+export class ProductDetailsPage extends BasePage {
   readonly productName: Locator;
   readonly category: Locator;
   readonly price: Locator;
@@ -14,7 +14,7 @@ export class ProductDetailsPage {
   readonly viewCartMessageButton: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.productName = page.locator('.product-information h2');
     this.category = page.locator('.product-information p', { hasText: 'Category' });
     this.price = page.locator('.product-information span span');

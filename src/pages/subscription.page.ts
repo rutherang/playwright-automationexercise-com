@@ -1,12 +1,12 @@
 import { Page, Locator, expect } from '@playwright/test';
+import { BasePage } from './base.page';
 
-export class SubscriptionPage {
-  readonly page: Page;
+export class SubscriptionPage extends BasePage {
   readonly subscriptionEmail: Locator;
   readonly subscribeButton: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.subscriptionEmail = page.getByPlaceholder('Your email address');
     this.subscribeButton = page.locator('#subscribe');
   }
