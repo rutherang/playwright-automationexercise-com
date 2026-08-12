@@ -17,10 +17,21 @@ export class CartPage extends BasePage {
     const items: CartItem[] = [];
 
     for (const row of rows) {
-      const name = (await row.locator('.cart_description h4 a').textContent())?.trim() ?? '';
-      const priceText = (await row.locator('.cart_price p').textContent()) ?? '';
-      const quantityText = (await row.locator('.cart_quantity button').textContent()) ?? '';
-      const totalText = (await row.locator('.cart_total_price').textContent()) ?? '';
+      const nameLocator = row.locator('.cart_description h4 a');
+      await expect(nameLocator).toBeVisible();
+      const name = (await nameLocator.textContent())?.trim() ?? '';
+
+      const priceLocator = row.locator('.cart_price p');
+      await expect(priceLocator).toBeVisible();
+      const priceText = (await priceLocator.textContent()) ?? '';
+
+      const quantityLocator = row.locator('.cart_quantity button');
+      await expect(quantityLocator).toBeVisible();
+      const quantityText = (await quantityLocator.textContent()) ?? '';
+
+      const totalLocator = row.locator('.cart_total_price');
+      await expect(totalLocator).toBeVisible();
+      const totalText = (await totalLocator.textContent()) ?? '';
 
       const item: CartItem = {
         name: name,
@@ -68,13 +79,16 @@ export class CartPage extends BasePage {
   }
 
   async removeProductByName(productName: string) {
-    const row = this.cartRows.filter({ hasText: productName});
-    expect (row).toHaveCount(1);
+    const row = this.cartRows.filter({ hasText: productName });
+    expect(row).toHaveCount(1);
     await row.locator('.cart_quantity_delete').click();
   }
 
   async checkCartHasProducts(productNames: string[]): Promise<void> {
-    const actualNames = (await this.page.locator('.cart_description h4 a').allTextContents()).map((name) => name.replace(/\s+/g, ' ').trim());
+    const cartDescriptionLocator = this.page.locator('.cart_description h4 a');
+    await expect(cartDescriptionLocator.first()).toBeVisible();
+    const actualNames = (await cartDescriptionLocator.allTextContents())
+      .map((name) => name.replace(/\s+/g, ' ').trim());
 
     for (const expectedName of productNames) {
       await test.step(`"${expectedName}" exists in product list`, async () => {
@@ -82,5 +96,4 @@ export class CartPage extends BasePage {
       });
     }
   }
-
 }

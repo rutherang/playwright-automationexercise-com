@@ -31,6 +31,7 @@ export class ProductsPage extends BasePage {
 
   async addProductToCartByName(productName: string): Promise<void> {
     const product = this.products.filter({ hasText: productName });
+    await expect(product).toBeVisible();
     const matchedNames = (await product.allTextContents()).map((text) => text.replace(/\s+/g, ' ').trim());
     await expect(product, `Expected exactly 1 product matching "${productName}", but found: ${JSON.stringify(matchedNames)}`).toHaveCount(1); // ensures exactly one match
     await product.scrollIntoViewIfNeeded();
@@ -58,6 +59,7 @@ export class ProductsPage extends BasePage {
   }
 
   async verifyAllProductsContainText(searchText: string) {
+    await expect(this.products.first()).toBeVisible();
     const productNames = await this.products.allTextContents();
     expect(productNames.length).toBeGreaterThan(0);
 
@@ -91,6 +93,7 @@ export class ProductsPage extends BasePage {
   }
 
   async checkProductHasNames(productNames: string[]): Promise<void> {
+    await expect(this.productNames.first()).toBeVisible();
     const actualNames = (await this.productNames.allTextContents()).map((name) => name.replace(/\s+/g, ' ').trim());
 
     for (const expectedName of productNames) {
@@ -109,6 +112,7 @@ export class ProductsPage extends BasePage {
 
   async addRecommendedProductToCart(productName: string): Promise<void> {
     const carousel = this.page.locator('#recommended-item-carousel');
+    await expect(carousel).toBeVisible();
     console.log('pausing carousel auto-rotation', await carousel.allInnerTexts());
     // pause the carousel's auto-rotation
     await this.page.evaluate(() => {

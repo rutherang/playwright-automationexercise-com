@@ -29,6 +29,7 @@ export class CheckOutPage extends BasePage {
   }
 
   async verifyAddress(locator: Locator, expected: AddressDetails, label: string): Promise<void> {
+    await expect(locator.first()).toBeVisible();
     const actualLines = (await locator.allTextContents()).map((text) =>
       text
         .replace(/^\.\s*/, '')
