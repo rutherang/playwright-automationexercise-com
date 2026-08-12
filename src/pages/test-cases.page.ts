@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 import { BasePage } from './base.page';
 
 export class TestCasePage extends BasePage {
@@ -11,7 +11,9 @@ export class TestCasePage extends BasePage {
   }
 
   async getTestCaseSteps(locatorName: string): Promise<string[]> {
-    const items = await this.page.locator(`${locatorName} .list-group li.list-group-item`).allTextContents();
+    const itemsLocator = this.page.locator(`${locatorName} .list-group li.list-group-item`);
+    await expect(itemsLocator.first()).toBeVisible();
+    const items = await itemsLocator.allTextContents();
     const cleaned = items.map(text => text.replace(/\s+/g, ' ').trim()).filter(Boolean);
     return cleaned;
   }

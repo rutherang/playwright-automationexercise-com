@@ -4,6 +4,7 @@ import { BasePage } from './base.page';
 export class SubscriptionPage extends BasePage {
   readonly subscriptionEmail: Locator;
   readonly subscribeButton: Locator;
+  readonly subscriptionSuccessMessage: string = 'You have been successfully subscribed!';
 
   constructor(page: Page) {
     super(page);
@@ -15,9 +16,5 @@ export class SubscriptionPage extends BasePage {
     await this.page.getByRole('heading', { name: 'Subscription ' }).scrollIntoViewIfNeeded();
     await this.subscriptionEmail.fill(emailAddress);
     await this.subscribeButton.click();
-  }
-
-  async verifySubscriptionSuccess(): Promise<void> {
-    await expect(this.page.getByText('You have been successfully subscribed!')).toBeVisible();
   }
 }

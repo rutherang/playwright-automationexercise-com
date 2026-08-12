@@ -18,7 +18,6 @@ export class BasePage {
     while (currentScrollY !== previousScrollY && currentScrollY > 0) {
       previousScrollY = currentScrollY;
       await this.page.keyboard.press('PageUp');
-      await this.page.waitForTimeout(200);
       currentScrollY = await this.page.evaluate(() => window.scrollY);
     }
   }

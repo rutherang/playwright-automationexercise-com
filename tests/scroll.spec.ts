@@ -14,7 +14,7 @@ test.describe('Scroll', () => {
     await page.goto('/');
     await page.getByText('Subscription').scrollIntoViewIfNeeded();
     await expect(page.getByText('Subscription')).toBeVisible();
-    await new HomePage(page).scrollToTopUsingPageUp(page);
+    await new HomePage(page).scrollToTopUsingPageUp();
     await expect(page.getByRole('heading', { name: 'Full-Fledged practice website' })).toBeVisible();
   });
 });
