@@ -9,13 +9,16 @@
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
     "test:report": "playwright show-report",
-    "test:mem": "NODE_OPTIONS='--max-old-space-size=4096' playwright test"
+    "test:mem": "NODE_OPTIONS='--max-old-space-size=4096' playwright test",
+    "qa:run": "playwright test && node scripts/collect-failures.mjs",
+    "qa:failures": "node scripts/collect-failures.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "@faker-js/faker": "^10.6.0",
     "@playwright/test": "^1.62.0",
     "@types/node": "^26.1.2"
   },
